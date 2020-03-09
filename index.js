@@ -23,6 +23,16 @@ server.post("/api/users", (req, res) => {
   }
 });
 
+server.get("/api/users", (req, res) => {
+  if (!users) {
+    res
+      .status(500)
+      .json({ errorMessage: "The users information could not be retrieved." });
+  } else {
+    res.status(200).json(users);
+  }
+});
+
 const PORT = 5000;
 server.listen(PORT, (req, res) => {
   console.log(`Hello in localhost${PORT}`);
