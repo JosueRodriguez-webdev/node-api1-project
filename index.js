@@ -33,7 +33,28 @@ server.get("/api/users", (req, res) => {
   }
 });
 
+server.get("/api/users/:id", (req, res) => {
+  const sentId = req.params.id;
+  const user = users.find((userID) => {
+    return userID.id === sentId;
+  });
+
+  console.log(`logging the user`, user, sentId);
+
+  if (user) {
+    res.status(200).json(user);
+  } else if (!user) {
+    res
+      .status(404)
+      .json({ message: "The user with the specified ID does not exist." });
+  } else {
+    res
+      .status(500)
+      .json({ errorMessage: "The user information could not be retrieved." });
+  }
+});
+
 const PORT = 5000;
 server.listen(PORT, (req, res) => {
-  console.log(`Hello in localhost${PORT}`);
+  console.log(`Hello in localhost ${PORT}`);
 });
