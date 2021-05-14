@@ -3,7 +3,7 @@ const { nanoid } = require("nanoid");
 
 const users = express.Router();
 
-let persons = [{ id: 1 }];
+let persons = [{ id: 1, name: "josue" }];
 
 // Returns array of users
 users.get("/", (req, res) => {
@@ -51,5 +51,24 @@ users.delete("/:id", (req, res) => {
 });
 
 // Updates user with matching id
+users.put("/:id", (req, res) => {
+  const ID = req.params.id;
+  let person;
+
+  for (let idx in persons) {
+    if (ID == persons[idx].id) {
+      const id = persons[idx].id;
+      persons[idx] = { ...persons[idx].id, ...req.body };
+      persons[idx] = { ...persons[idx], id };
+      person = persons[idx];
+    }
+  }
+
+  if (person) {
+    return res.status(200).json(person);
+  }
+
+  res.status(404).json({ message: "User not found" });
+});
 
 module.exports = users;
