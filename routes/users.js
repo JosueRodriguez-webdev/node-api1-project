@@ -33,6 +33,22 @@ users.get("/:id", (req, res) => {
 });
 
 // Removes single user with matching id
+users.delete("/:id", (req, res) => {
+  const id = req.params.id;
+  let was_deleted = false;
+  for (let idx in persons) {
+    if (id == persons[idx].id) {
+      persons.pop(idx);
+      was_deleted = true;
+    }
+  }
+
+  if (was_deleted) {
+    return res.status(200).json({ message: "Deletion Success" });
+  }
+
+  res.status(404).json({ message: "User does not exist" });
+});
 
 // Updates user with matching id
 
